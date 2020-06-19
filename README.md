@@ -16,50 +16,70 @@ Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%
 Extra credits                       |  1 / 2  | 50%
 
+
 <br/>
+
 ## Memorize Game
+
 <br/>
+
 #### Assignment I
 
 Task 2. Unpredictable order
+
 > Swift provides an easy solution to randomize Array. In the ViewModel I added a *shuffled()* method to randomize emojis to play with and in the Model a *shuffle()* method to initialize a new game with shuffled cards
 >
 > `let emojis = theme.emojis.shuffled()`
 > 
 > `cards.shuffle()`
-
+>
 
 <br/>
+
 Task 3. Width and height in a certain proportion
+
 > Applied to the ZStack of the View, because of the better solution it was commented later 
 >
 > `.aspectRatio(2/3, contentMode: .fit)`
+>
+
 
 <br/>
+
 Task 4. Randomize number of pairs of cards
+
 > In the 2nd Assignment it is changed for an another solution
 >
 > `let numberOfPairs = Int.random(in: 2...5)`
 
 <br/>
+
 Task 5. Adjust size of the font
+
 > After lecture #4 a Grid is applied to the project 
 >
 > `.font(EmojiMemoryGame.numberOfPairs > 4 ? .callout : .largeTitle)`
+>
 
 <br/>
+
 Extra Credit 1. 
+
 > Solution for that was displayed earlier 
 > 
 > `let emojis = theme.emojis.shuffled()`
+>
 
 <br/>
---- 
+
+---
+
 <br/>
 
 #### Assignment II
 
 Task 3-5. Architect the concept of a 'theme' into the game
+
 > 'static' properties belong to the type; a new theme can be added as an another 'static' property or by using `append(newTheme)` to the variable 'theme'. I prefer 'static' because I can see all themes in one place 
 
 ```swift
@@ -94,6 +114,7 @@ class EmojiMemoryGame: ObservableObject {
 ```
 
 <br/>
+
 Task 6. Add 'New Game' button
 > Add a Reset button in ViewModel and then use it functionality in the View 
 
@@ -114,23 +135,29 @@ Task 6. Add 'New Game' button
 ```
 
 <br/>
+
 Task 7. Display a theme in UI
+
 > `Text(viewModel.theme.name)`
+>
 
 <br/>
+
 Task 8. Giving and penalizing points
+
 > The logic should be implemented in the Model. To the 'Card' struct we need to add a new boolean property 'alreadyBeenSeen' that will help us to penalize when cards haven't been matched during the 1st try.
 >
 > In the `choose(card:)` method replace the 'indexOfTheOneAndOnlyFaceUpCard' index which was created in the 4th lecture with the array 'faceupCardIndeces'. The new element will contain up to 2 indeces and flip cards face down when they don't match.
 >
 > Additional comments in the project.
+>
 
 ```swift
 mutating func choose(card: Card) {
 
     let faceupCardIndeces = cards.indices.filter { cards[$0].isFaceUp }
     
-    \\\ 3rd tap; when two cards are opened, update there Seen status and flip them; restart
+    \\\ third tap; when two cards are opened, update there Seen status and flip them; restart
     
     if faceupCardIndeces.count > 1 {
         for index in cards.indices {
@@ -171,17 +198,22 @@ mutating func choose(card: Card) {
 ```
 
 <br/>
+
 Task 9. Display the score in UI
+
 > Add score as a variable in ViewModel and then display in the VIew 
 >
 > `var score: Int { model.score }` // ViewModel
 >
 > `Text("\(viewModel.score)")` // View
-
+>
 
 <br/>
+
 Extra Credit 1. Support a gradient as the 'color' for a theme
+
 > In the View (because it's a visual improvement) I added a computed property to make a gradient from the theme's color. 'CardView' requires now two values: `card` and `themeColor: LinearGradient`, so that color can be used to design appereance of cards
+>
 
 ```swift
     var themeColor: LinearGradient {
@@ -194,6 +226,7 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 ```
 
 <br/>
+
 ## Ideas I liked from the Course
 1. If Model can be made with different types, add Generics to it.
 2. ViewModel establishes a specific type of data.

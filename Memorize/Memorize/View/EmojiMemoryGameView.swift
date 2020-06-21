@@ -10,10 +10,10 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
-    var themeColor: LinearGradient {
-        return LinearGradient(gradient: Gradient(colors: [viewModel.theme.color, viewModel.theme.color.opacity(0.4)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+    var themeColor: Color {
+        return viewModel.theme.color
     }
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -25,7 +25,7 @@ struct EmojiMemoryGameView: View {
                     Spacer()
                     Text("Score")
                     Text("\(viewModel.score)")
-                        .foregroundColor(.pink)
+                        .foregroundColor(gameColor)
                 }
             }
             .padding(.horizontal, 5)
@@ -46,19 +46,25 @@ struct EmojiMemoryGameView: View {
                     .padding(.horizontal, 30)
                     .padding(.vertical, 15)
                     .background(
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.pink)
-                )
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .fill(gameColor)
+                    )
             }
             .padding(.top, 10)
         }
         .padding(.top, 15)
         .padding()
     }
+    
+    // MARK: - Drawing Contraits
+    private let gameColor = Color.pink
+    private let cornerRadius: CGFloat = 25
 }
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
-        EmojiMemoryGameView(viewModel: EmojiMemoryGame())
+        let game = EmojiMemoryGame()
+        game.choose(card: game.cards[0])
+        return EmojiMemoryGameView(viewModel: game)
     }
 }

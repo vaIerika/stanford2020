@@ -10,7 +10,7 @@
 
 Type                                | Number  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            | 4 / 10  | 40%
+Lectures                            |  5 / 10 | 50%
 Assignment I                        |  6 / 6  | 100%
 Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%
@@ -231,7 +231,9 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 1. If Model can be made with different types, add Generics to it.
 2. ViewModel establishes a specific type of data.
 3. Static function can be used to create a specific ViewModel from Model; that function can be used to reset the game.
-4. Make variable of the model 'private' in ViewModel and send to the View an another copy of it.
+4. Use 'Drawing Contraits' to avoid setting values directly in a code.
+5. Make variable of the model 'private' in ViewModel and send to the View an another copy of it. Mark 'private' all properties and functions that shouldn't be accessible and 'private(set)' - that shouldn't be changeable nowhere else.
+6. Custom ViewModifiers, Shapes can help make code much reusable. 
 
 <br/>
 

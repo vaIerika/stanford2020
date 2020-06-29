@@ -33,13 +33,17 @@ struct EmojiMemoryGameView: View {
             Grid(viewModel.cards) { card in
                 CardView(card: card, themeColor: self.themeColor)
                     .onTapGesture {
-                        self.viewModel.choose(card: card)
+                        withAnimation(.linear(duration: flipAnimationDuration)) {
+                            self.viewModel.choose(card: card)
+                        }
                     }
                     .padding(5)
             }
             
             Button(action: {
-                self.viewModel.resetGame()
+                withAnimation(.easeInOut) {
+                    self.viewModel.resetGame()
+                }
             }) {
                 Text("New Game")
                     .foregroundColor(.white)
@@ -59,6 +63,7 @@ struct EmojiMemoryGameView: View {
     // MARK: - Drawing Contraits
     private let gameColor = Color.pink
     private let cornerRadius: CGFloat = 25
+    private let flipAnimationDuration: Double = 0.75
 }
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
@@ -68,3 +73,5 @@ struct EmojiMemoryGameView_Previews: PreviewProvider {
         return EmojiMemoryGameView(viewModel: game)
     }
 }
+
+            

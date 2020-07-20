@@ -60,7 +60,7 @@ struct EmojiMemoryGameView: View {
         .padding()
     }
     
-    // MARK: - Drawing Contraits
+    // MARK: - Drawing Constraits
     private let gameColor = Color.pink
     private let cornerRadius: CGFloat = 25
     private let flipAnimationDuration: Double = 0.75

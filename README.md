@@ -10,12 +10,41 @@
 
 Type                                | Number  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            |  5 / 10 | 50%
+Lectures                            |  6 / 12 |  50%
 Assignment I                        |  6 / 6  | 100%
 Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%
-Extra credits                       |  1 / 2  | 50%
+Extra credits                       |  1 / 2  |  50%
+Assignment III                      | 19 / 19 | 100%
+Extra credits                       |  4 / 11 |  36%
 
+
+
+<br/>
+
+## Set Game 
+
+<br/>
+
+#### Assignment III
+
+Task 1 - 19. Make a game of Set 
+
+> Since the 1st task sounds like "Implement a game of solo Set" and other 18 tasks also cannot be called unexacting, I'm not providing here detailed answers for each task. However you can find some comments and print output in the [Set Game](./SetGame) project I've made.
+>
+> I used a new feature of SwiftUI `LazyVGrid` instead of the Grid provided by Professor.
+>
+> This project is made with **Xcode Version 12.0 beta 2**. 
+>
+
+<div>
+<img src="SetGame/Screenshots/GameView.png" width="300px"/>
+<img src= "SetGame/Screenshots/GameViewGif.gif" width = "600px"/>
+</div>
+
+<br/>
+
+---
 
 <br/>
 
@@ -231,7 +260,7 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 1. If Model can be made with different types, add Generics to it.
 2. ViewModel establishes a specific type of data.
 3. Static function can be used to create a specific ViewModel from Model; that function can be used to reset the game.
-4. Use 'Drawing Contraits' to avoid setting values directly in a code.
+4. Use 'Drawing Constraints' to avoid setting values directly in a code.
 5. Make variable of the model 'private' in ViewModel and send to the View an another copy of it. Mark 'private' all properties and functions that shouldn't be accessible and 'private(set)' - that shouldn't be changeable nowhere else.
 6. Custom ViewModifiers, Shapes can help make code much reusable. 
 
@@ -247,5 +276,5 @@ Presented code is my attempt to solve required tasks of the Stanford course. I'd
 
 <br/>
 
-
-
+## Credits 
+A playing card back image used in the Set Game is made by [macrovector](https://www.freepik.com/free-vector/undefined). Construction of the MVVM and the stripped pattern is based on the amazing implementation by [Antonio J Rossi](https://github.com/antoniojrossi) in the Set Game.

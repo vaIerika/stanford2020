@@ -48,7 +48,7 @@ struct Cardify: AnimatableModifier {
         .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
     
-    // MARK: - Drawing Contraits
+    // MARK: - Drawing Constraits
     private let cornerRadius: CGFloat = 10.0
     private let edgeLineWidth: CGFloat = 3
     private let themeColorOpacity = 0.4

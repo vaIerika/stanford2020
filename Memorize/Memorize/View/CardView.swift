@@ -62,7 +62,7 @@ struct CardView: View {
         }
     }
     
-    // MARK: - Drawing Contraits    
+    // MARK: - Drawing Constraits    
     private func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * 0.65
     }

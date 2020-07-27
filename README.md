@@ -10,7 +10,7 @@
 
 Type                                | Number  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            |  6 / 12 |  50%
+Lectures                            |  7 / 14 |  50%
 Assignment I                        |  6 / 6  | 100%
 Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%

@@ -10,7 +10,7 @@
 
 Type                                | Number  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            |  7 / 14 |  50%
+Lectures                            |  8 / 14 |  57%
 Assignment I                        |  6 / 6  | 100%
 Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%
@@ -263,6 +263,7 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 4. Use 'Drawing Constraints' to avoid setting values directly in a code.
 5. Make variable of the model 'private' in ViewModel and send to the View an another copy of it. Mark 'private' all properties and functions that shouldn't be accessible and 'private(set)' - that shouldn't be changeable nowhere else.
 6. Custom ViewModifiers, Shapes can help make code much reusable. 
+7. Use *.updating($gestureStateVar)* to change the value of @GestureState for Non-discrete gestures
 
 <br/>
 

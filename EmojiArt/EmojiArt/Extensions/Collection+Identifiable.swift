@@ -72,13 +72,48 @@ extension Array where Element == NSItemProvider {
     }
 }
 
+// MARK: - Converts from some other coordinate space to the proxy's own
 extension GeometryProxy {
-    
-    // converts from some other coordinate space to the proxy's own
     func convert(_ point: CGPoint, from coordinateSpace: CoordinateSpace) -> CGPoint {
         let frame = self.frame(in: coordinateSpace)
         return CGPoint(x: point.x-frame.origin.x, y: point.y-frame.origin.y)
     }
 }
 
+// MARK: - Convert a Data to a String
+extension Data {
+    var utf8: String? { String(data: self, encoding: .utf8)}
+}
 
+extension CGPoint {
+    static func -(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.x - rhs.x, height: lhs.y - rhs.y)
+    }
+    static func -(lhs: Self, rhs: CGSize) -> CGPoint {
+        CGPoint(x: lhs.x - rhs.width, y: lhs.y - rhs.height)
+    }
+    static func +(lhs: Self, rhs: CGSize) -> CGPoint {
+        CGPoint(x: lhs.x + rhs.width, y: lhs.y + rhs.height)
+    }
+    static func *(lhs: Self, rhs: CGFloat) -> CGPoint {
+        CGPoint(x: lhs.x * rhs, y: lhs.y * rhs)
+    }
+    static func /(lhs: Self, rhs: CGFloat) -> CGPoint {
+        CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
+    }
+}
+
+extension CGSize {
+    static func -(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+    }
+    static func +(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+    static func *(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    }
+    static func /(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
+    }
+}

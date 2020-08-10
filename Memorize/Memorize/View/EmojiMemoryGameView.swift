@@ -11,7 +11,12 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var themeColor: Color {
-        return viewModel.theme.color
+        
+        // Assignment 1 & 2. Color as a View
+        // return viewModel.theme.color
+        
+        // Assignment 5. UIColor is used instead
+        return Color(viewModel.theme.color)
     }
 
     var body: some View {

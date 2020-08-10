@@ -21,6 +21,7 @@ Assignment III                      | 19 / 19 | 100%
 Extra credits                       |  4 / 11 |  36%
 Assignment IV                       | 10 / 10 | 100%
 Extra credits                       |  1 /  1 | 100%
+Assignment V                        |  2 /  2 | 100%
 
 
 
@@ -509,6 +510,58 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 
 <br/>
 
+---
+
+<br/>
+
+#### Assignment V
+
+Task 1. Pre-defined number of cards for each theme 
+
+> Remove an option of a random number of pairs. In the `ViewModel` inside the `createMemoryGame(with:)` method replace use a theme property.
+>
+
+```swift
+ let numberOfPairs = theme.cardsNumber
+ 
+```
+
+
+> In `GameTheme.swift` file make Non-optional number of cards. Add a value of this property to each theme.
+>
+
+```swift
+var cardsNumber: Int
+
+static let cats = Theme(name: "Cats", emojis: ["😺", "😸", "😹", "😻", "🙀", "😿", "😾", "😼"], cardsNumber: 8, color: .red)
+```
+
+
+<br/>
+
+Task 2. JSON representation of the theme 
+
+> 1. Add extensions: UIColor+RGBA and Data+utf8.
+>
+> 2. Change a type of the `color` property of the `Theme` structure to `UIColor.RGB`.
+>
+> 3. A theme should be created as the following:
+```swift 
+static let animals = Theme(name: "Animals", emojis: ["🐶", "🐨", "🦁", "🐼", "🦊", "🐻", "🐰"], cardsNumber: 7, color: .init(red: 200/255, green: 81/255, blue: 81/255, alpha: 1))
+```
+> 
+> 4. Add a `var json: Data?` to `Theme` structure. Use it in the `ViewModel` to print the data as json.
+```swift 
+ print("json = \(theme.json?.utf8 ?? "nil")")
+```
+> 5. Make sure a theme color returns a Color view in the `View`: 
+```swift 
+var themeColor { return Color(viewModel.theme.color) }
+```
+>
+
+<br/>
+
 ## Ideas I liked from the Course
 1. If Model can be made with different types, add Generics to it.
 2. ViewModel establishes a specific type of data.
@@ -516,7 +569,8 @@ Extra Credit 1. Support a gradient as the 'color' for a theme
 4. Use 'Drawing Constraints' to avoid setting values directly in a code.
 5. Make variable of the model 'private' in ViewModel and send to the View an another copy of it. Mark 'private' all properties and functions that shouldn't be accessible and 'private(set)' - that shouldn't be changeable nowhere else.
 6. Custom ViewModifiers, Shapes can help make code much reusable. 
-7. Use *.updating($gestureStateVar)* to change the value of @GestureState for Non-discrete gestures
+7. Use *.updating($gestureStateVar)* to change the value of @GestureState for Non-discrete gestures.
+8. Modifier `.exclusively(before: doubleTapToZoom(in: size))` allows to combine gestures.
 
 <br/>
 
@@ -531,4 +585,4 @@ Presented code is my attempt to solve required tasks of the Stanford course. I'd
 <br/>
 
 ## Credits 
-A playing card back image used in the Set Game is made by [macrovector](https://www.freepik.com/free-vector/undefined). Construction of the MVVM and the stripped pattern is based on the amazing implementation by [Antonio J Rossi](https://github.com/antoniojrossi) in the Set Game.
+A playing card back image used in the Set Game is made by [macrovector](https://www.freepik.com/free-vector/undefined). These guys have nice solutions for Stanford assignments: [Antonio J Rossi](https://github.com/antoniojrossi), [Ruban](https://github.com/sk-ruban).

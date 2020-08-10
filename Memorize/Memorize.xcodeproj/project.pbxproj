@@ -23,6 +23,8 @@
 		AFB349E7249CECF700F58975 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB349E6249CECF700F58975 /* CardView.swift */; };
 		AFB349E9249F6DFB00F58975 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB349E8249F6DFB00F58975 /* Pie.swift */; };
 		AFB349EB249F847200F58975 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB349EA249F847200F58975 /* Cardify.swift */; };
+		B8572C6224E18DD4001D696A /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8572C6124E18DD4001D696A /* UIColor+RGBA.swift */; };
+		B8572C6624E1BC47001D696A /* Data+utf8.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8572C6524E1BC47001D696A /* Data+utf8.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		AFB349E6249CECF700F58975 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		AFB349E8249F6DFB00F58975 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		AFB349EA249F847200F58975 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		B8572C6124E18DD4001D696A /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
+		B8572C6524E1BC47001D696A /* Data+utf8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+utf8.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 			children = (
 				AF17AD7A2490E5F2009029E7 /* Array+Only.swift */,
 				AF396C3E248A87E1008C8D5A /* Array+Identifiable.swift */,
+				B8572C6124E18DD4001D696A /* UIColor+RGBA.swift */,
+				B8572C6524E1BC47001D696A /* Data+utf8.swift */,
 			);
 			path = Entensions;
 			sourceTree = "<group>";
@@ -216,12 +222,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF5E23562482F6F100E304D2 /* AppDelegate.swift in Sources */,
+				B8572C6224E18DD4001D696A /* UIColor+RGBA.swift in Sources */,
 				AF54E5BE249BCC50007BCCA3 /* GameTheme.swift in Sources */,
 				AF5E23582482F6F100E304D2 /* SceneDelegate.swift in Sources */,
 				AF7E07A72483FEA600B60736 /* MemoryGame.swift in Sources */,
 				AF17AD7B2490E5F2009029E7 /* Array+Only.swift in Sources */,
 				AF5E235A2482F6F100E304D2 /* EmojiMemoryGameView.swift in Sources */,
 				AFB349EB249F847200F58975 /* Cardify.swift in Sources */,
+				B8572C6624E1BC47001D696A /* Data+utf8.swift in Sources */,
 				AFB349E9249F6DFB00F58975 /* Pie.swift in Sources */,
 				AF7E07A9248400C100B60736 /* EmojiMemoryGame.swift in Sources */,
 				AF396C3F248A87E1008C8D5A /* Array+Identifiable.swift in Sources */,

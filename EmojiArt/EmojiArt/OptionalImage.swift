@@ -16,7 +16,6 @@ struct OptionalImage: View {
                 Image(uiImage: uiImage!)
             }
         }
-
     }
 }
 

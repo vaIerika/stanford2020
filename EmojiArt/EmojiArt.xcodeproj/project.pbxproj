@@ -16,6 +16,7 @@
 		B8693EFC24CAF30700F374E1 /* EmojiArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8693EFB24CAF30700F374E1 /* EmojiArtDocument.swift */; };
 		B8693EFE24CB075A00F374E1 /* EmojiArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8693EFD24CB075A00F374E1 /* EmojiArt.swift */; };
 		B8693F0024CB0D5000F374E1 /* Collection+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8693EFF24CB0D5000F374E1 /* Collection+Identifiable.swift */; };
+		B8C2867924DD6C5D0059AA21 /* Set+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C2867824DD6C5D0059AA21 /* Set+Identifiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B8693EFB24CAF30700F374E1 /* EmojiArtDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocument.swift; sourceTree = "<group>"; };
 		B8693EFD24CB075A00F374E1 /* EmojiArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArt.swift; sourceTree = "<group>"; };
 		B8693EFF24CB0D5000F374E1 /* Collection+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Identifiable.swift"; sourceTree = "<group>"; };
+		B8C2867824DD6C5D0059AA21 /* Set+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Identifiable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				B85E679F24D0681D00EABBF2 /* AnimatableSystemFontModifier.swift */,
+				B8C2867824DD6C5D0059AA21 /* Set+Identifiable.swift */,
 				B8693EFF24CB0D5000F374E1 /* Collection+Identifiable.swift */,
 			);
 			path = Extensions;
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C2867924DD6C5D0059AA21 /* Set+Identifiable.swift in Sources */,
 				B85E67A024D0681D00EABBF2 /* AnimatableSystemFontModifier.swift in Sources */,
 				B8693F0024CB0D5000F374E1 /* Collection+Identifiable.swift in Sources */,
 				B8693EFE24CB075A00F374E1 /* EmojiArt.swift in Sources */,

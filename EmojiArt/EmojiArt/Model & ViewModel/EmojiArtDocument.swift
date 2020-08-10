@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// view model
+// ViewModel
 class EmojiArtDocument: ObservableObject {
 
     static let palette: String = "🐝🦋🐢🐏🐑🦙🐄"
@@ -33,6 +33,12 @@ class EmojiArtDocument: ObservableObject {
     // MARK: - Intents
     func addEmoji(_ emoji: String, at location: CGPoint, size: CGFloat) {
         emojiArt.addEmoji(emoji, x: Int(location.x), y: Int(location.y), size: Int(size))
+    }
+    
+    func removeEmoji(_ emoji: EmojiArt.Emoji) {
+        if let index = emojiArt.emojis.firstIndex(matching: emoji) {
+            emojiArt.emojis.remove(at: index)
+        }
     }
 
     func moveEmoji(_ emoji: EmojiArt.Emoji, by offset: CGSize) {

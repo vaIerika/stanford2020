@@ -1,7 +1,9 @@
 # Course Stanford CS193p 2020 - Developing Apps for iOS
 > 
-> Solutions for [Stanford CS193p 2020](https://cs193p.sites.stanford.edu) course assignments
+> Solutions for [Stanford CS193p 2020](https://cs193p.sites.stanford.edu) course assignments.
 >
+> Projects are written in **Xcode Version 12.0 beta 2**.
+> 
 
 <br/>
 
@@ -17,9 +19,256 @@ Assignment II                       |  9 / 9  | 100%
 Extra credits                       |  1 / 2  |  50%
 Assignment III                      | 19 / 19 | 100%
 Extra credits                       |  4 / 11 |  36%
+Assignment IV                       | 10 / 10 | 100%
+Extra credits                       |  1 /  1 | 100%
 
 
 
+
+<br/>
+
+## Emoji Art 
+
+> 
+> Project is made with **Xcode Version 12.0 beta 2**. 
+> 
+
+<br/>
+
+#### Assignment IV
+
+Task 1. The code accordingly to the Lecture 8.
+
+ 
+Task 2 - 5. Support the selection of the emojis.
+
+> 1. Use a Set to collect selected emojis. 
+> 2. Write a `toggleMatching()` method as an extension to the Set that allows adding (selection) and removing (deselection) emojis from the Set. Call this method `.onTapGesture` for each emoji.
+> 3. Customize an appearance of selected emojis with the ternany operator (? :). 
+> 4. Add `.exclusively(before:)` to allow two variants of tap gesture: double tap for zoom and one tap to deselect all emojis.
+
+```swift
+// 1 
+@State private var selectedEmojis: Set<EmojiArt.Emoji> = []
+
+// 2 Set+Identifiable.swift
+extension Set where Element: Identifiable {
+    mutating func toggleMatching(_ element: Element) {
+        if contains(matching: element) {
+           remove(element)
+        } else {
+           insert(element)
+        }
+    }
+}
+
+// View
+ZStack {
+    Color.white
+    ForEach(document.emojis) { emoji in
+         Text(emoji.text)
+
+            // 2
+            .onTapGesture {
+                selectedEmojis.toggleMatching(emoji)
+            }
+            // 3
+            .background(
+                Circle()
+                    .stroke(Color.red)
+                    .opacity(isSelected(emoji) ? 1 : 0)
+            )
+    }
+}
+// 4
+ .gesture(tapBgToDeselectOrZoom(in: geometry.size))
+ 
+--- 
+
+private func tapBgToDeselectOrZoom(in size: CGSize) -> some Gesture {
+    TapGesture(count: 1)
+        .exclusively(before: doubleTapToZoom(in: size))
+        .onEnded { _ in
+            withAnimation(.linear(duration: 0.2)) {
+                selectedEmojis.removeAll()
+             }
+        }
+}
+
+// 3
+private func isSelected(_ emoji: EmojiArt.Emoji) -> Bool {
+    selectedEmojis.contains(matching: emoji)
+}
+
+```
+
+<br/>
+
+Task 6 - 7. Dragging emojis  
+
+> Create `@State` and `@GestureState` variables and a function for the Drag Gesture. Add a `.gesture()` modifier with this gesture to an emoji. 
+>
+> A background image will be dragged if there is no selection of emojis.
+>
+
+```swift 
+    @State private var steadyStateDragEmojisOffset: CGSize = .zero
+    @GestureState private var gestureDragEmojisOffset: CGSize = .zero
+    
+    private func dragEmojisGesture(for emoji: EmojiArt.Emoji) -> some Gesture {
+        
+        DragGesture()
+            .updating($gestureDragEmojisOffset) { latestDragGestureValue, gestureDragEmojisOffset, transition in
+                gestureDragEmojisOffset = latestDragGestureValue.translation / zoomScale
+            }
+            .onEnded { finalDragGestureValue in
+                let distanceDragged = finalDragGestureValue.translation / zoomScale
+                
+                for emoji in selectedEmojis {
+                   withAnimation {
+                        document.moveEmoji(emoji, by: distanceDragged)
+                    }
+                }
+            }
+    }
+    
+    ---
+    
+    ForEach(document.emojis) { emoji in //...
+            .gesture(dragEmojisGesture(for: emoji))        
+    }
+    
+```
+
+<br/>
+
+Task 8 - 9. Pinching emojis 
+
+> 1. Improve a `zoomScale` variable in the way that if there is a selection of emojis during pinching a size of the bg image will stay the same.
+> 
+> 2. Add a method to calculate zoomScale for each emoji. 
+> 
+> 3. Modify `zoomGesture()` to change a scale of the selected emojis only, or a scale of the whole picture if there is no selection.
+
+```swift 
+    // 1
+    private var zoomScale: CGFloat {
+        steadyStateZoomScale * (selectedEmojis.isEmpty ? gestureZoomScale : 1)
+    }
+    
+    // 2
+    private func zoomScale(for emoji: EmojiArt.Emoji) -> CGFloat {
+        if isSelected(emoji) {
+            return steadyStateZoomScale * gestureZoomScale
+        } else {
+            return zoomScale
+        }
+    }
+    
+    .font(animatableWithSize: emoji.fontSize * zoomScale(for: emoji))
+    
+    // 3
+    private func zoomGesture() -> some Gesture {    //...
+
+                .onEnded { finalGestureScale in
+                if selectedEmojis.isEmpty {
+                    steadyStateZoomScale *= finalGestureScale
+                } else {
+                    selectedEmojis.forEach { emoji in
+                        document.scaleEmoji(emoji, by: finalGestureScale)
+                    }
+                }
+            }
+    }
+```
+
+<br/>
+
+Task 10. Deleting emojis 
+
+> 1. Add to the ViewModel `removeEmoji()` function. 
+>
+> 2. Implement this function in the View.
+>
+> Variant A. Deleting with the Long Tap Gesture.
+> 
+> Variant B. Selected emojis can be deleted with the tap on the Bin 🗑.
+
+```swift
+
+    // 1 ViewModel 
+    func removeEmoji(_ emoji: EmojiArt.Emoji) {
+        if let index = emojiArt.emojis.firstIndex(matching: emoji) {
+            emojiArt.emojis.remove(at: index)
+        }
+    }
+    
+    
+    // 2. Variant A
+    private func longPressToRemove(_ emoji: EmojiArt.Emoji) -> some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .onEnded { _ in
+                document.removeEmoji(emoji)
+            }
+    }
+    
+    ---
+    
+    ForEach(document.emojis) { emoji in //...
+           .gesture(longPressToRemove(emoji))    
+    }
+    
+    // 2. Variant B
+    Button(action: {
+        selectedEmojis.forEach { emoji in
+            document.removeEmoji(emoji)
+            selectedEmojis.remove(emoji)
+        }
+    }) { 
+        Image(systemName: "trash.fill")
+            .font(.headline)
+            .foregroundColor(selectedEmojis.isEmpty ? .gray : .blue)
+    }
+```
+
+<br/>
+
+Extra credit 1. Dragging unselected emojis
+
+> Add condition in the `.onEnded { }` modifier of the `dragEmojisGesture(for:)` function. If an emoji isn't a part of the selection it will be moved anyway by the dragged distance.
+> 
+
+```swift 
+    private func dragEmojisGesture(for emoji: EmojiArt.Emoji) -> some Gesture {
+        
+        // Extra credit
+        let isEmojiPartOfSelection = isSelected(emoji)
+        
+        return DragGesture()
+            .updating($gestureDragEmojisOffset) { latestDragGestureValue, gestureDragEmojisOffset, transition in
+                gestureDragEmojisOffset = latestDragGestureValue.translation / zoomScale
+            }
+            .onEnded { finalDragGestureValue in
+                let distanceDragged = finalDragGestureValue.translation / zoomScale
+                
+                // Extra credit `if-else`
+                if isEmojiPartOfSelection {
+                
+                    for emoji in selectedEmojis {
+                        withAnimation {
+                            document.moveEmoji(emoji, by: distanceDragged)
+                        }
+                    }
+                } else {
+                    document.moveEmoji(emoji, by: distanceDragged)
+                }
+            }
+    }
+```
+<br/>
+
+---
+ 
 <br/>
 
 ## Set Game 
@@ -53,6 +302,8 @@ Task 1 - 19. Make a game of Set
 <br/>
 
 #### Assignment I
+
+Task 1. The code from the 1st & 2nd Lectures
 
 Task 2. Unpredictable order
 
@@ -107,7 +358,9 @@ Extra Credit 1.
 
 #### Assignment II
 
-Task 3-5. Architect the concept of a 'theme' into the game
+Task 1. The code from the 3rd & 4th Lectures.
+
+Task 2 - 5. Architect the concept of a 'theme' into the game
 
 > 'static' properties belong to the type; a new theme can be added as an another 'static' property or by using `append(newTheme)` to the variable 'theme'. I prefer 'static' because I can see all themes in one place 
 

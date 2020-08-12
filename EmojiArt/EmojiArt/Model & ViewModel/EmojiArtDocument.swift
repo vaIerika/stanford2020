@@ -6,23 +6,25 @@
 //
 
 import SwiftUI
+import Combine
 
 // ViewModel
 class EmojiArtDocument: ObservableObject {
 
     static let palette: String = "🐝🦋🐢🐏🐑🦙🐄"
 
-    @Published private var emojiArt: EmojiArt = EmojiArt() {
-        didSet {
-            //print("json = \(emojiArt.json?.utf8 ?? "nil")")
-            UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
-        }
-    }
+    @Published private var emojiArt: EmojiArt = EmojiArt()
 
     private static let untitled = "EmojiArtDocument.Untitled"
     
+    private var autosaveCancellable: AnyCancellable?
+    
     init() {
         emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtDocument.untitled)) ?? EmojiArt()
+        autosaveCancellable = $emojiArt.sink { emojiArt in
+            print("json = \(emojiArt.json?.utf8 ?? "nil")")
+            UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
+        }
         fetchBackgroundImageData()
     }
     
@@ -54,15 +56,47 @@ class EmojiArtDocument: ObservableObject {
         }
     }
 
-    func setBackgroundURL(_ url: URL?) {
-        emojiArt.backgroundURL = url?.imageURL
-        fetchBackgroundImageData()
+    var backgroundURL: URL? {
+        get {
+            emojiArt.backgroundURL
+        }
+        set {
+            emojiArt.backgroundURL = newValue?.imageURL
+            fetchBackgroundImageData()
+        }
     }
+    
+    private var fetchImageCancellable: AnyCancellable?
 
     private func fetchBackgroundImageData() {
         backgroundImage = nil   /// if image is heavy, it will show a user that we're processing
+        
+        // Lecture 9. Data Flow
+        if let url = emojiArt.backgroundURL {
+            fetchImageCancellable?.cancel()  // in case if another image is chosen before the previous was loaded
 
-        if let url = emojiArt.backgroundURL {   /// more common to use URLSessions
+            // B) Short version
+            fetchImageCancellable = URLSession.shared.dataTaskPublisher(for: url)
+                .map { data, urlResponse in UIImage(data: data) }
+                .receive(on: DispatchQueue.main)
+                .replaceError(with: nil)   // .sink with a error handling; assign works only with 'Never' failure
+                .assign(to: \.backgroundImage, on: self)
+            
+            
+            // A) Detailed version
+            /*
+            let session = URLSession.shared
+            let publisher = session.dataTaskPublisher(for: url)
+                .map { data, urlResponse in UIImage(data: data) }
+                .receive(on: DispatchQueue.main)
+                .replaceError(with: nil)
+            fetchImageCancellable = publisher.assign(to: \.backgroundImage, on: self)
+             */
+        }
+        
+        // Lecture 7. Multithreading
+        /*
+         if let url = emojiArt.backgroundURL {   /// more common to use URLSessions
             DispatchQueue.global(qos: .userInitiated).async {
                 if let imageData = try? Data(contentsOf: url) {     /// can take a lot of time
                     DispatchQueue.main.async {
@@ -73,6 +107,7 @@ class EmojiArtDocument: ObservableObject {
                 }
             }
         }
+        */
     }
 }
 

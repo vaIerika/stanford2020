@@ -523,7 +523,6 @@ Task 1. Pre-defined number of cards for each theme
 
 ```swift
  let numberOfPairs = theme.cardsNumber
- 
 ```
 
 

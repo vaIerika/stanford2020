@@ -15,7 +15,6 @@ struct Spinning: ViewModifier {
             .rotationEffect(Angle(degrees: isVisible ? 360 : 0))
             .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
             .onAppear { isVisible = true }
-           // .onDisappear { isVisible = false }
     }
 }
 

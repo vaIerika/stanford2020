@@ -12,7 +12,7 @@
 
 Type                                | Number  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            |  9 / 14 |  64%
+Lectures                            | 10 / 14 |  71%
 Assignment I                        |  6 / 6  | 100%
 Extra credits                       |  1 / 1  | 100%
 Assignment II                       |  9 / 9  | 100%
@@ -570,6 +570,16 @@ var themeColor { return Color(viewModel.theme.color) }
 6. Custom ViewModifiers, Shapes can help make code much reusable. 
 7. Use *.updating($gestureStateVar)* to change the value of @GestureState for Non-discrete gestures.
 8. Modifier `.exclusively(before: doubleTapToZoom(in: size))` allows to combine gestures.
+9. A value of the *State var* can be assign with initialized data. 1st variant to use `.onAppear`, which is called after initialization. Or 2nd variant is to assign _value with the *wrappedValue*:
+```swift
+    init(document: EmojiArtDocument) {
+        self.document = document
+        _chosenPalette = State(wrappedValue: document.defaultPalette)
+    }
+```
+10. **Environment Object** is usually used for sharing ViewModel data between screens 
+11. `UIPasteboard.general.url` has a URL? data that a user copied somewhere, and it can be used as a value for properties, can be pasted. 
+12. Reodering views can be achieved with `.zIndex(-1)` for background. 
 
 <br/>
 

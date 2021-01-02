@@ -24,8 +24,17 @@ class EmojiMemoryGame: ObservableObject {
         model.score
     }
     
-    init() {
-        let theme = Theme.themes.randomElement()!
+    // MARK: - Assignment 1 & 2.
+    /// Random theme
+//    init() {
+//        let theme = Theme.themes.randomElement()!
+//        self.theme = theme
+//        model = EmojiMemoryGame.createMemoryGame(with: theme)
+//    }
+    
+    // MARK: - Assignment 6.
+    /// Chosen theme
+    init(theme: Theme) {
         self.theme = theme
         model = EmojiMemoryGame.createMemoryGame(with: theme)
     }

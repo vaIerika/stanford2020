@@ -63,6 +63,7 @@ struct EmojiMemoryGameView: View {
         }
         .padding(.top, 15)
         .padding()
+        .navigationBarTitle(Text(""), displayMode: .inline)
     }
     
     // MARK: - Drawing Constraits
@@ -73,7 +74,7 @@ struct EmojiMemoryGameView: View {
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame()
+        let game = EmojiMemoryGame(theme: Theme.cats)
         game.choose(card: game.cards[0])
         return EmojiMemoryGameView(viewModel: game)
     }

@@ -8,9 +8,18 @@
 import Foundation
 import SwiftUI
 
-struct Theme: Codable {
+struct Theme: Codable, Identifiable {
+    
+    //MARK: - Assignment 6.
+    /// - Property id and Identifiable protocol
+    var id = UUID()
+    
     var name: String
     var emojis: [String]
+    
+    //MARK: - Assignment 6.
+    /// - Property to collect emojis that had been removed 
+    var removedEmojis: [String]
     
     // MARK: -  Assignment 1 & 2.
     /// - No need to for implementation `Codable`
@@ -43,12 +52,16 @@ struct Theme: Codable {
         return try? JSONEncoder().encode(self)
     }
     
-    static let cats = Theme(name: "Cats", emojis: ["😺", "😸", "😹", "😻", "🙀", "😿", "😾", "😼"], cardsNumber: 8, color: .init(red: 100/255, green: 200/255, blue: 200/255, alpha: 1))
-    static let techno = Theme(name: "Technology", emojis: ["🤖", "👾", "🦾", "🦿", "🎮", "🖲"], cardsNumber: 6, color: .init(red: 5/255, green: 5/255, blue: 5/255, alpha: 1))
-    static let zodiac = Theme(name: "Signs of zodiac", emojis: ["♌️", "♍️", "♏️", "♓️", "♉️", "♈️", "⛎", "♒️", "♋️", "⛎", "♊️", "♑️"], cardsNumber: 12, color: .init(red: 255/255, green: 60/255, blue: 150/255, alpha: 1))
-    static let animals = Theme(name: "Animals", emojis: ["🐶", "🐨", "🦁", "🐮", "🐷", "🐯", "🐼", "🦊", "🐻", "🐰"], cardsNumber: 10, color: .init(red: 200/255, green: 81/255, blue: 81/255, alpha: 1))
-    static let vegetables = Theme(name: "Vegetables", emojis: ["🥦", "🍅", "🌶", "🌽", "🥕", "🥬", "🥒", "🧄", "🍆", "🧅"], cardsNumber: 10, color: .init(red: 61/255, green: 201/255, blue: 81/255, alpha: 1))
-    static let flowers = Theme(name: "Flowers", emojis: ["🌷", "🌺", "🌹", "🌸", "🌼", "🌻", "💐"], cardsNumber: 7, color: .init(red: 255/255, green: 10/255, blue: 15/255, alpha: 1))
+    // MARK: - Assignment 6.
+    /// - Use `getRGB` method to get a codable color
+    /// - Apple standard colors library
+    /// - `removedEmojis` array
+    static let cats = Theme(name: "Cats", emojis: ["😺", "😸", "😹", "😻", "🙀", "😿", "😾", "😼"], removedEmojis: [], cardsNumber: 8, color: UIColor.getRGB(.orange))
+    static let techno = Theme(name: "Technology", emojis: ["🤖", "👾", "🦾", "🦿", "🎮", "🖲"], removedEmojis: [], cardsNumber: 6, color: UIColor.getRGB(.cyan))
+    static let zodiac = Theme(name: "Signs of zodiac", emojis: ["♌️", "♍️", "♏️", "♓️", "♉️", "♈️", "⛎", "♒️", "♋️", "♐️", "♊️", "♑️"], removedEmojis: [], cardsNumber: 12, color: UIColor.getRGB(.purple))
+    static let animals = Theme(name: "Animals", emojis: ["🐶", "🐨", "🦁", "🐮", "🐷", "🐯", "🐼", "🦊", "🐻", "🐰"], removedEmojis: [], cardsNumber: 10, color: UIColor.getRGB(.brown))
+    static let vegetables = Theme(name: "Vegetables", emojis: ["🥦", "🍅", "🌶", "🌽", "🥕", "🥬", "🥒", "🧄", "🍆", "🧅"], removedEmojis: [], cardsNumber: 10, color: UIColor.getRGB(.green))
+    static let flowers = Theme(name: "Flowers", emojis: ["🌷", "🌺", "🌹", "🌸", "🌼", "🌻", "💐"], removedEmojis: [], cardsNumber: 7, color: UIColor.getRGB(.red))
     
     static var themes = [cats, techno, zodiac, animals, vegetables, flowers]
 }

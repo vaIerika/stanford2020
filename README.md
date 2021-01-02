@@ -1,28 +1,29 @@
 # Course Stanford CS193p 2020 - Developing Apps for iOS
 > 
-> Solutions for [Stanford CS193p 2020](https://cs193p.sites.stanford.edu) course assignments.
+> Solutions for [Stanford CS193p 2020](https://cs193p.sites.stanford.edu) course assignments. Use different commits to browse repo files of certain Lectures and Assignments. 
 >
-> Projects are written in **Xcode Version 12.0 beta 2**.
-> 
+> Projects are written in **Xcode Version 12.0 beta 2** and **12.3** later.
+>
 
 <br/>
 
 
 ## Completion status
 
-Type                                | Number  | Completion
+Type                                | Quantity  | Completion
 :---                                |  :---:  |   :---:
 Lectures                            | 10 / 14 |  71%
-Assignment I                        |  6 / 6  | 100%
-Extra credits                       |  1 / 1  | 100%
-Assignment II                       |  9 / 9  | 100%
-Extra credits                       |  1 / 2  |  50%
-Assignment III                      | 19 / 19 | 100%
-Extra credits                       |  4 / 11 |  36%
-Assignment IV                       | 10 / 10 | 100%
-Extra credits                       |  1 /  1 | 100%
-Assignment V                        |  2 /  2 | 100%
-
+**Assignment I**                    |  6 / 6  | **100%**
+Extra credits                       |  1 / 1  | *+100%*
+**Assignment II**                   |  9 / 9  | **100%**
+Extra credits                       |  1 / 2  |  *+50%*
+**Assignment III**                  | 19 / 19 | **100%**
+Extra credits                       |  4 / 11 |  *+36%*
+**Assignment IV**                   | 10 / 10 | **100%**
+Extra credits                       |  1 /  1 | *+100%*
+**Assignment V**                    |  2 /  2 | **100%**
+**Assignment VI**                   | 14 / 14 | **100%**
+Extra credits                       |  2 /  2 | *+100%*
 
 
 
@@ -560,6 +561,328 @@ var themeColor { return Color(viewModel.theme.color) }
 >
 
 <br/>
+
+---
+
+<br/>
+
+#### Assignment VI
+
+Task 1-2. Show a list of saved themes when the app launches
+
+> 1. Create a ViewModel for themes that loads saved themes if they were edited by user or default version. Add a method to save data.
+>
+```swift 
+class Themes: ObservableObject {
+    @Published private(set) var savedThemes: [Theme]
+    static let saveKey = "SavedThemesForEmojiMemoryGame"
+    
+    init() {
+        if let data = UserDefaults.standard.data(forKey: Self.saveKey) {
+            if let decoded = try? JSONDecoder().decode([Theme].self, from: data) {
+                self.savedThemes = decoded
+                return
+            }
+        }
+        self.savedThemes = [Theme.cats, Theme.techno, Theme.zodiac, Theme.animals, Theme.vegetables, Theme.flowers]
+    }
+    
+    private func save() {
+        if let encoded = try? JSONEncoder().encode(savedThemes) {
+            UserDefaults.standard.set(encoded, forKey: Self.saveKey)
+        }
+    }
+}
+```
+>
+> 2. Add a `id` property to the Theme structure, and conform it to the Identifiable protocol
+>
+```swift
+struct Theme: Codable, Identifiable {
+    var id = UUID()
+    ...
+}
+```
+>
+> 3. Create a View that presents a List of themes
+>
+```swift
+struct ThemesListView: View {
+    @ObservedObject var viewModelThemes: Themes
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                List(viewModelThemes.savedThemes) { theme in
+                    Text(theme.name)
+                }
+            }
+        }.navigationBarTitle("Memorize")
+    }
+}
+```
+>
+> 4. Change a `contentView` constant to contain the created ThemesListView with the data from Themes ViewModel
+>
+```swift
+    // class SceneDelegate, `scene()` method
+    let themes = Themes()
+    let contentView = ThemesListView(viewModelThemes: themes)
+```
+>
+
+<br/>
+
+Task 3. Display information for each theme
+>
+> Display a color with `Color(theme.color)`. A method that returns String can be used to show a descriptive text (emojis and number of played pairs): `Text(showListOfEmojis(theme: theme))`. The method:
+>
+```swift
+private func showListOfEmojis(theme: Theme) -> String {
+    let pairsStr = theme.cardsNumber == theme.emojis.count ? "" : "\(theme.cardsNumber) pairs from "
+    return pairsStr + String(theme.emojis.joined())    
+}
+```
+>
+
+<br/>
+
+Task 4-6. Rows of the themes list navigate to start the game
+>
+> 1. Wrape each row of the List view with the NavigationLink:
+```swift 
+NavigationLink(destination: EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: theme))) {
+...
+}
+```
+>
+> 2. Update initialization of the `EmojiMemoryGame` ViewModel, it should accept the chosen theme as a parameter to create a game.
+>
+```swift
+init(theme: Theme) {
+    self.theme = theme
+    model = EmojiMemoryGame.createMemoryGame(with: theme)
+}
+```
+>
+
+<br/>
+
+Task 7. Adding a new theme
+>
+> 1. Add a method to the created ViewModel that adds a new theme into the array. Which can used also for editing theme afterwards.
+>
+```swift
+    // class Themes - ViewModel
+    func addTheme(_ theme: Theme) {
+        if let index = savedThemes.firstIndex(matching: theme) {
+            savedThemes[index] = theme
+        } else {
+            savedThemes.append(theme)
+        }
+        save()
+    }
+```
+>
+> 2. Create a new view `ThemeEditorView` to show the Adding/Editing options for the theme, that view takes to parameters  `theme: Binding<Theme?>, updateChanges: @escaping (Theme) -> Void)`. The method will allow to save changes and update the model. 
+>
+> 3. Show `ThemeEditorView` through `sheet()`. 
+>
+```swift
+.sheet(isPresented: $showingUpdateThemeView) {
+    ThemeEditorView(theme: $selectedTheme) { updatedTheme in
+        viewModelThemes.addTheme(updatedTheme)
+            editMode = .inactive
+    }
+}
+```
+>
+> If the "Add" button is pressed, the property `selectedTheme: Theme?` is equal `nil`.
+>
+```swift 
+    private func addNewTheme() {
+        selectedTheme = nil
+        showingUpdateThemeView = true
+    }
+```
+>
+<br/>
+
+Task 8-9. Edit mode. Deleting themes
+
+> 1. Add to the ViewModel method to remove the chosen theme
+```swift
+func removeTheme(_ theme: Theme) {
+    if let index = savedThemes.firstIndex(matching: theme) {
+        savedThemes.remove(at: index)
+        save()
+    }
+}
+```
+>
+> 2. Surround a "theme row" with `ForEach` view, so `.onDelete` modifier can catch `indexSet` for the row that needed to be removed. Add `onTapGesture` modifier to allow edit a specific theme.
+> 
+```swift
+List {
+    ForEach(viewModelThemes.savedThemes) { theme in
+        NavigationLink(destination: EmojiMemoryGameView(viewModel: EmojiMemoryGame(theme: theme))) {
+            HStack {
+                ZStack {
+                    Rectangle()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(Color(theme.color))
+                    Image(systemName: "pencil")
+                        .foregroundColor(.white)
+                        .opacity(editMode.isEditing ? 1 : 0)
+                        .onTapGesture {
+                            selectedTheme = theme
+                            showingUpdateThemeView = true
+                        }
+                }.frame(width: 25, height: 25)
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(theme.name)
+                        .font(.headline)
+                    Text(showListOfEmojis(theme: theme))
+                        .font(.caption)
+                        .lineLimit(1)
+                }
+            }.padding(5)
+        }
+    }
+    .onDelete { indexSet in
+        indexSet.map { viewModelThemes.savedThemes[$0] }.forEach { theme in
+            viewModelThemes.removeTheme(theme)
+        }
+    }
+}
+
+```
+>
+
+<br/>
+
+Task 10-13. Editing theme with `ThemeEditorView`
+
+> 1. Edit the name of the theme `TextField("Name theme", text: $themeToAdd.name)`
+> 
+> 2. Add emoji to the theme 
+>
+```swift
+TextField("Emoji", text: $emojiToAdd)
+
+Button("Add") {
+    for character in emojiToAdd {
+        if !themeToAdd.emojis.contains(String(character)) {
+            themeToAdd.emojis.append(String(character))
+        }
+    }
+    emojiToAdd = ""
+    updateCardsNumber()
+}.disabled(emojiToAdd.isEmpty)
+
+```
+>
+> 3. Update a number of cards in the theme
+>
+```swift
+if themeToAdd.emojis.count > 1 {
+    Section(header: Text("Number of cards to play")) {
+        Stepper(value: $themeToAdd.cardsNumber, in: 2...themeToAdd.emojis.count) {
+            Text("\(themeToAdd.cardsNumber) pairs")
+        }
+    }
+}
+```
+>
+```swift 
+...
+ private func updateCardsNumber() {
+        themeToAdd.cardsNumber = themeToAdd.emojis.count
+    }
+```
+>
+> 4. Closure in the View allows to update the ViewModel 
+>
+
+<br/>
+
+Extra credit 1. Support choosinh a theme's color 
+
+> 1. Add property colors for the `ThemeEditorView` 
+`private var colors: [UIColor] = [.red, .blue, .green, .purple, .yellow, .magenta, .orange, .cyan, .brown]`
+>
+> 2. Assign a chosen color for the theme on the Tap gesture 
+>
+```swift
+Section(header: Text("Theme color")) {
+    Grid(colors, id: \.self) { color in
+        ZStack {
+            Circle().fill(Color(color)).frame(width: 35, height: 35)
+            Image(systemName: "checkmark.circle")
+                .foregroundColor(.white)
+                .opacity(UIColor(themeToAdd.color) == color ? 1 : 0)
+        }.onTapGesture {
+            themeToAdd.color = UIColor.getRGB(color)
+        }
+    }.frame(minHeight: 20, idealHeight: 80, maxHeight: 100)
+}
+```
+>
+
+<br/>
+
+Extra credit 2. Keep track of the removed emojis
+
+> Add 2nd view for removed emojis, able tap gesture action
+```swift 
+Section(header: Text("Emojis to play"), footer: Text("Tap emoji to exclude")) {
+    Grid(themeToAdd.emojis, id: \.self) { emoji in
+        Text(emoji)
+            .frame(width: 30, height: 30)
+            .onTapGesture {
+                withAnimation {
+                    removeEmoji(emoji)
+                }
+            }
+    }.frame(minHeight: 20, idealHeight: 100, maxHeight: 300)
+}
+if !themeToAdd.removedEmojis.isEmpty {
+    Section(header: Text("Removed emojis"), footer: Text("Tap emoji to include in the game")) {
+        Grid(themeToAdd.removedEmojis, id: \.self) { emoji in
+            Text(emoji)
+                .frame(width: 30, height: 30)
+                .onTapGesture {
+                    withAnimation {
+                        returnEmoji(emoji)
+                    }
+                }
+        }.frame(minHeight: 20, idealHeight: 100, maxHeight: 300)
+    }
+}
+```
+>
+> Supporting methods
+>
+```swift
+    private func removeEmoji(_ emoji: String) {
+        if let index = themeToAdd.emojis.firstIndex(of: emoji) {
+            themeToAdd.removedEmojis.append(themeToAdd.emojis.remove(at: index))
+            updateCardsNumber()
+        }
+    }
+    ...
+    private func returnEmoji(_ emoji: String) {
+        if let index = themeToAdd.removedEmojis.firstIndex(of: emoji) {
+            themeToAdd.emojis.append(themeToAdd.removedEmojis.remove(at: index))
+            updateCardsNumber()
+        }
+    }
+```
+
+
+<br/>
+
 
 ## Ideas I liked from the Course
 1. If Model can be made with different types, add Generics to it.

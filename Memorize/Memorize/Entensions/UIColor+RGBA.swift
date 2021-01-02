@@ -23,6 +23,10 @@ extension UIColor {
         self.init(red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: rgb.alpha)
     }
     
+    static func getRGB(_ uiColor: UIColor) -> UIColor.RGB {
+    return RGB(red: uiColor.rgb.red, green: uiColor.rgb.green, blue: uiColor.rgb.blue, alpha: uiColor.rgb.alpha)
+    }
+    
     public var rgb: RGB {
         var red: CGFloat = 0
         var green: CGFloat = 0

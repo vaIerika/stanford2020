@@ -25,6 +25,9 @@
 		AFB349EB249F847200F58975 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB349EA249F847200F58975 /* Cardify.swift */; };
 		B8572C6224E18DD4001D696A /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8572C6124E18DD4001D696A /* UIColor+RGBA.swift */; };
 		B8572C6624E1BC47001D696A /* Data+utf8.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8572C6524E1BC47001D696A /* Data+utf8.swift */; };
+		B880EB3B259CBD7D00001C13 /* ThemeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B880EB3A259CBD7D00001C13 /* ThemeEditorView.swift */; };
+		B8C3424C259B703B006E56B5 /* ThemesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C3424B259B703B006E56B5 /* ThemesListView.swift */; };
+		B8C3424F259B7380006E56B5 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C3424E259B7380006E56B5 /* Themes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +51,9 @@
 		AFB349EA249F847200F58975 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		B8572C6124E18DD4001D696A /* UIColor+RGBA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
 		B8572C6524E1BC47001D696A /* Data+utf8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+utf8.swift"; sourceTree = "<group>"; };
+		B880EB3A259CBD7D00001C13 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
+		B8C3424B259B703B006E56B5 /* ThemesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesListView.swift; sourceTree = "<group>"; };
+		B8C3424E259B7380006E56B5 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,7 @@
 			children = (
 				AF7E07A8248400C100B60736 /* EmojiMemoryGame.swift */,
 				AF54E5BD249BCC50007BCCA3 /* GameTheme.swift */,
+				B8C3424E259B7380006E56B5 /* Themes.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -102,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				AF5E23592482F6F100E304D2 /* EmojiMemoryGameView.swift */,
+				B8C3424B259B703B006E56B5 /* ThemesListView.swift */,
+				B880EB3A259CBD7D00001C13 /* ThemeEditorView.swift */,
 				AFB349E6249CECF700F58975 /* CardView.swift */,
 				AFB349EA249F847200F58975 /* Cardify.swift */,
 				AFB349E8249F6DFB00F58975 /* Pie.swift */,
@@ -221,10 +230,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C3424F259B7380006E56B5 /* Themes.swift in Sources */,
 				AF5E23562482F6F100E304D2 /* AppDelegate.swift in Sources */,
 				B8572C6224E18DD4001D696A /* UIColor+RGBA.swift in Sources */,
 				AF54E5BE249BCC50007BCCA3 /* GameTheme.swift in Sources */,
 				AF5E23582482F6F100E304D2 /* SceneDelegate.swift in Sources */,
+				B880EB3B259CBD7D00001C13 /* ThemeEditorView.swift in Sources */,
+				B8C3424C259B703B006E56B5 /* ThemesListView.swift in Sources */,
 				AF7E07A72483FEA600B60736 /* MemoryGame.swift in Sources */,
 				AF17AD7B2490E5F2009029E7 /* Array+Only.swift in Sources */,
 				AF5E235A2482F6F100E304D2 /* EmojiMemoryGameView.swift in Sources */,
@@ -373,7 +385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = YA4J44RAZS;
+				DEVELOPMENT_TEAM = 2DY52YYPUP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memorize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -393,7 +405,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = YA4J44RAZS;
+				DEVELOPMENT_TEAM = 2DY52YYPUP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memorize/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

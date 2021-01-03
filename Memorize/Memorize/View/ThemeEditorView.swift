@@ -14,7 +14,7 @@ struct ThemeEditorView: View {
     @Binding var theme: Theme?
     var updateChanges: (Theme) -> Void
     
-    @State private var themeToAdd: Theme =  Theme(id: UUID(), name: "Unknown", emojis: [], removedEmojis: [], cardsNumber: 0, color: UIColor.getRGB(.red))
+    @State private var themeToAdd: Theme
     @State private var emojiToAdd = ""
     private var colors: [UIColor] = [.red, .blue, .green, .purple, .yellow, .magenta, .orange, .cyan, .brown]
     private var validData: Bool {
@@ -24,6 +24,7 @@ struct ThemeEditorView: View {
     init(theme: Binding<Theme?>, updateChanges: @escaping (Theme) -> Void) {
         self._theme = theme
         self.updateChanges = updateChanges
+        self._themeToAdd = State(wrappedValue: theme.wrappedValue ?? Theme(name: "Unknown", emojis: [], removedEmojis: [], cardsNumber: 0, color: UIColor.getRGB(.red)))
     }
     
     var body: some View {
@@ -103,14 +104,6 @@ struct ThemeEditorView: View {
                     }
                 }
             }
-        }.onAppear {
-            setUpEditMode()
-        }
-    }
-    
-    private func setUpEditMode() {
-        if theme != nil {
-            themeToAdd = theme!
         }
     }
     

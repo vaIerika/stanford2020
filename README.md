@@ -12,7 +12,7 @@
 
 Type                                | Quantity  | Completion
 :---                                |  :---:  |   :---:
-Lectures                            | 10 / 14 |  71%
+Lectures                            | 11 / 14 |  79%
 **Assignment I**                    |  6 / 6  | **100%**
 Extra credits                       |  1 / 1  | *+100%*
 **Assignment II**                   |  9 / 9  | **100%**
@@ -807,7 +807,7 @@ if themeToAdd.emojis.count > 1 {
 
 <br/>
 
-Extra credit 1. Support choosinh a theme's color 
+Extra credit 1. Support choosing a theme's color 
 
 > 1. Add property colors for the `ThemeEditorView` 
 `private var colors: [UIColor] = [.red, .blue, .green, .purple, .yellow, .magenta, .orange, .cyan, .brown]`
@@ -879,12 +879,26 @@ if !themeToAdd.removedEmojis.isEmpty {
         }
     }
 ```
+>
+
+<br>
+
+>
+> ❗️ Update in the `ThemeEditorView` after the 11th Lecture: Initialization of State property with a wrapper value of the `Binding<Theme>`
+>
+```swift
+    init(theme: Binding<Theme?>, updateChanges: @escaping (Theme) -> Void) {
+        _theme = theme
+        self.updateChanges = updateChanges
+        _themeToAdd = State(wrappedValue: theme.wrappedValue ?? Theme(name: "Unknown", emojis: [], removedEmojis: [], cardsNumber: 0, color: UIColor.getRGB(.red)))
+    }
+```
 
 
 <br/>
 
 
-## Ideas I liked from the Course
+## New & Useful Ideas for me from the Course
 1. If Model can be made with different types, add Generics to it.
 2. ViewModel establishes a specific type of data.
 3. Static function can be used to create a specific ViewModel from Model; that function can be used to reset the game.
@@ -903,6 +917,11 @@ if !themeToAdd.removedEmojis.isEmpty {
 10. **Environment Object** is usually used for sharing ViewModel data between screens 
 11. `UIPasteboard.general.url` has a URL? data that a user copied somewhere, and it can be used as a value for properties, can be pasted. 
 12. Reodering views can be achieved with `.zIndex(-1)` for background. 
+13. `State` property can be initialized with `Binding.wrapperValue`: 
+```swift
+_themeToAdd = State(wrappedValue: theme.wrappedValue
+```
+14. Tags of the `Picker` has to have the same type with `selection` value; `nil` value can be presented as `.tag(String?.none)`. `Picker` can have additional items (and tags) that are not included in `selection` array.
 
 <br/>
 

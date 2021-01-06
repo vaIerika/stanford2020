@@ -29,6 +29,7 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable {
     
     private var autosaveCancellable: AnyCancellable?
     
+    /// UserDefaults approach to store data
     init(id: UUID? = nil) {
         self.id = id ?? UUID()
         let defaultsKey = "EmojiArtDocument.\(self.id.uuidString)"
@@ -38,6 +39,26 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable {
             UserDefaults.standard.set(emojiArt.json, forKey: defaultsKey)
         }
         fetchBackgroundImageData()
+    }
+    
+    // MARK: - Lecture 13
+    /// Use URL instead of UserDefaults for storing data
+    var url: URL? { didSet { self.save(emojiArt) } }
+    
+    init(url: URL) {
+        self.id = UUID()
+        self.url = url
+        self.emojiArt = EmojiArt(json: try? Data(contentsOf: url)) ?? EmojiArt()
+        fetchBackgroundImageData()
+        autosaveCancellable = $emojiArt.sink { emojiArt in
+            self.save(emojiArt)
+        }
+    }
+    
+    private func save(_ emojiArt: EmojiArt) {
+        if url != nil {
+            try? emojiArt.json?.write(to: url!)
+        }
     }
     
     @Published private(set) var backgroundImage: UIImage?

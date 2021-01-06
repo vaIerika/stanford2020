@@ -21,24 +21,22 @@ class EmojiArtDocumentStore: ObservableObject {
         return documentNames[document]!
     }
     
-    func setName(_ name: String, for document: EmojiArtDocument) {
+    /// UserDefaults approach to edit document
+    func setNameUD(_ name: String, for document: EmojiArtDocument) {
         documentNames[document] = name
     }
     
-    var documents: [EmojiArtDocument] {
-        documentNames.keys.sorted { documentNames[$0]! < documentNames[$1]! }
+    /// UserDefaults approach to add document
+    func addDocumentUD(named name: String = "Untitled") {
+        documentNames[EmojiArtDocument()] = name
     }
     
-    func addDocument(named name: String = "Untitled") {
-        documentNames[EmojiArtDocument()] = name 
-    }
-    
-    func removeDocument(_ document: EmojiArtDocument) {
+    /// UserDefaults approach to remove document
+    func removeDocumentUD(_ document: EmojiArtDocument) {
         documentNames[document] = nil
     }
     
-    private var autosave: AnyCancellable?
-    
+    /// UserDefaults approach to store data
     init(named name: String = "Emoji Art") {
         self.name = name
         let defaultsKey = "EmojiArtDocumentStore.\(name)"
@@ -47,6 +45,62 @@ class EmojiArtDocumentStore: ObservableObject {
             UserDefaults.standard.set(names.asPropertyList, forKey: defaultsKey)
         }
     }
+    
+    // MARK: - Lecture 13
+    /// DocumentsDirectory approach to edit document
+    func setName(_ name: String, for document: EmojiArtDocument) {
+        if let url = directory?.appendingPathComponent(name) {
+            if !documentNames.values.contains(name) {
+                removeDocument(document)
+                document.url = url
+                documentNames[document] = name
+            }
+        } else {
+            documentNames[document] = name
+        }
+    }
+    var documents: [EmojiArtDocument] {
+        documentNames.keys.sorted { documentNames[$0]! < documentNames[$1]! }
+    }
+    
+    /// DocumentsDirectory approach to add document
+    func addDocument(named name: String = "Untitled") {
+        let uniqueName = name.uniqued(withRespectTo: documentNames.values)
+        let document: EmojiArtDocument
+        if let url = directory?.appendingPathComponent(uniqueName) {
+            document = EmojiArtDocument(url: url)
+        } else {
+            document = EmojiArtDocument()
+        }
+        documentNames[document] = uniqueName
+    }
+    
+    /// DocumentsDirectory approach to remove document
+    func removeDocument(_ document: EmojiArtDocument) {
+        if let name = documentNames[document], let url = directory?.appendingPathComponent(name) {
+            try? FileManager.default.removeItem(at: url)
+        }
+        documentNames[document] = nil
+    }
+    
+    /// Use FileManager instead of UserDefaults for storing data
+    private var directory: URL?
+    
+    init(directory: URL) {
+        self.name = directory.lastPathComponent
+        self.directory = directory
+        do {
+            let documents = try FileManager.default.contentsOfDirectory(atPath: directory.path)
+            for document in documents {
+                let emojiArtDocument = EmojiArtDocument(url: directory.appendingPathComponent(document))
+                documentNames[emojiArtDocument] = document
+            }
+        } catch {
+            print("EmojiArtDocumentStore: couldn't create store from directory \(directory): \(error.localizedDescription)")
+        }
+    }
+    
+    private var autosave: AnyCancellable?
 }
 
 // MARK: - To save in UserDefaults as property value

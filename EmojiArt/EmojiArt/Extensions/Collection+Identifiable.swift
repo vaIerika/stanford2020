@@ -20,6 +20,14 @@ extension Collection where Element: Identifiable {
 extension URL {
     var imageURL: URL {
         
+        if isFileURL {
+            var url = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).first
+            url = url?.appendingPathComponent(self.lastPathComponent)
+            if url != nil {
+                return url! 
+            }
+        }
+        
         // check to see if there is an implanted imgUrl reference
         for query in query?.components(separatedBy: "&") ?? [] {
             let queryComponents = query.components(separatedBy: "=")

@@ -109,7 +109,7 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable {
         backgroundImage = nil   /// if image is heavy, it will show a user that we're processing
         
         // Lecture 9. Data Flow
-        if let url = emojiArt.backgroundURL {
+        if let url = emojiArt.backgroundURL?.imageURL {
             fetchImageCancellable?.cancel()  // in case if another image is chosen before the previous was loaded
 
             // B) Short version

@@ -9,6 +9,15 @@
 import Foundation
 import CoreData
 import Combine
+import MapKit
+
+extension Airport: MKAnnotation {
+    public var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    public var title: String? { name ?? icao }
+    public var subtitle: String? { location }
+}
 
 extension Airport {
     static func withICAO(_ icao: String, context: NSManagedObjectContext) -> Airport {

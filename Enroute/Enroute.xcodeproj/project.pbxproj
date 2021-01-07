@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8219D0025A744A100721F9F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219CFF25A744A100721F9F /* MapView.swift */; };
 		B83793AF25A1DBBB006C99E1 /* FilterFlights.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83793AE25A1DBBB006C99E1 /* FilterFlights.swift */; };
 		B89EFB4725A4A592003055E7 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89EFB4625A4A592003055E7 /* Airport.swift */; };
 		B89EFB4A25A4AB44003055E7 /* Airline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89EFB4925A4AB44003055E7 /* Airline.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B8219CFF25A744A100721F9F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B83793AE25A1DBBB006C99E1 /* FilterFlights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterFlights.swift; sourceTree = "<group>"; };
 		B89EFB4625A4A592003055E7 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		B89EFB4925A4AB44003055E7 /* Airline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airline.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			children = (
 				DAB658AA2467944B00A0F2BB /* FlightsEnrouteView.swift */,
 				B83793AE25A1DBBB006C99E1 /* FilterFlights.swift */,
+				B8219CFF25A744A100721F9F /* MapView.swift */,
 				DA47A9B52469D48900C8E13C /* FlightFetcher.swift */,
 				B89EFB4C25A4AC4F003055E7 /* Model */,
 				DA47A9B92469E88100C8E13C /* FlightAware */,
@@ -222,6 +225,7 @@
 				B89EFB5425A4B421003055E7 /* Enroute.xcdatamodeld in Sources */,
 				DAB658BB2467949600A0F2BB /* FAFlight.swift in Sources */,
 				DA47A9B32469D48100C8E13C /* Airlines.swift in Sources */,
+				B8219D0025A744A100721F9F /* MapView.swift in Sources */,
 				DA47A9B42469D48100C8E13C /* Airports.swift in Sources */,
 				DAB658A62467944B00A0F2BB /* SceneDelegate.swift in Sources */,
 				B83793AF25A1DBBB006C99E1 /* FilterFlights.swift in Sources */,
